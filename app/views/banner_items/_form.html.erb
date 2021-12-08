@@ -1,0 +1,37 @@
+<%= form_with(model: banner_item) do |form| %>
+  <% if banner_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(banner_item.errors.count, "error") %> prohibited this banner_item from being saved:</h2>
+
+      <ul>
+        <% banner_item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :banner_id %>
+    <%= form.text_field :banner_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item_id %>
+    <%= form.text_field :item_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rate %>
+    <%= form.number_field :rate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :amount %>
+    <%= form.number_field :amount %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

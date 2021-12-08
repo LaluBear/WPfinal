@@ -1,0 +1,20 @@
+%p#notice= notice
+%div
+  %p
+    %strong Bannername:
+    = @banner.bannerName
+  
+  %p
+    %strong Bannerstartdate:
+    = @banner.bannerStartDate
+  %p
+    %strong Bannerenddate:
+    = @banner.bannerEndDate
+%div
+  = button_to "pull 1", "/banner/:name/pull_one"
+  = button_to "pull 1", "/banner/:name/pull_ten"
+%div
+= link_to 'Edit', edit_banner_path(@banner)
+|
+= link_to 'Back', banners_path
+

@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  creditAmount: 1
+  status: MyString
+
+two:
+  type: 
+  creditAmount: 1
+  status: MyString

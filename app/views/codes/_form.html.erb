@@ -1,0 +1,32 @@
+<%= form_with(model: code) do |form| %>
+  <% if code.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(code.errors.count, "error") %> prohibited this code from being saved:</h2>
+
+      <ul>
+        <% code.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :type %>
+    <%= form.text_field :type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :creditAmount %>
+    <%= form.number_field :creditAmount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

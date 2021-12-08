@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Transanctions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>User</th>
+      <th>Item</th>
+      <th>Price</th>
+      <th>Amount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @transanctions.each do |transanction| %>
+      <tr>
+        <td><%= transanction.user_id %></td>
+        <td><%= transanction.user_id %></td>
+        <td><%= transanction.item_id %></td>
+        <td><%= transanction.price %></td>
+        <td><%= transanction.amount %></td>
+        <td><%= link_to 'Show', transanction %></td>
+        <td><%= link_to 'Edit', edit_transanction_path(transanction) %></td>
+        <td><%= link_to 'Destroy', transanction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Transanction', new_transanction_path %>

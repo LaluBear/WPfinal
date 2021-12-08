@@ -1,0 +1,32 @@
+<%= form_with(model: item) do |form| %>
+  <% if item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+        <% item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :itemname %>
+    <%= form.text_field :itemname %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rarity %>
+    <%= form.text_field :rarity %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item_img_url %>
+    <%= form.text_field :item_img_url %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

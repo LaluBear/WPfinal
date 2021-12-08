@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @code.type %>
+</p>
+
+<p>
+  <strong>Creditamount:</strong>
+  <%= @code.creditAmount %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @code.status %>
+</p>
+
+<%= link_to 'Edit', edit_code_path(@code) %> |
+<%= link_to 'Back', codes_path %>

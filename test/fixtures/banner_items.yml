@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  banner: one
+  item: one
+  rate: 1
+  amount: 1
+
+two:
+  banner: two
+  item: two
+  rate: 1
+  amount: 1
