@@ -5,7 +5,7 @@
 <table>
   <thead>
     <tr>
-      <th>Itemname</th>
+      <th>Name</th>
       <th>Rarity</th>
       <th>Item img url</th>
       <th colspan="3"></th>
@@ -15,7 +15,7 @@
   <tbody>
     <% @items.each do |item| %>
       <tr>
-        <td><%= item.itemname %></td>
+        <td><%= item.name %></td>
         <td><%= item.rarity %></td>
         <td><%= item.item_img_url %></td>
         <td><%= link_to 'Show', item %></td>

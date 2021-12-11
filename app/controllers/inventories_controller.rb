@@ -55,7 +55,15 @@ class InventoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
+  def inventory
+    @user = User.find(session[:user_id])
+    @items = @user.get_inventories
+    @number_items = @user.get_number_in_inventories
+    @sell_items = @user.get_sell_inventories
+    @number_sell_items = @user.get_number_in_sell_inventories
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_inventory

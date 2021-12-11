@@ -1,0 +1,18 @@
+%p#notice= notice
+%h1 How to obtain #{@item.name}
+%table
+  %thead
+    %tr
+      %th Bannername
+      %th Bannerstartdate
+      %th Bannerenddate
+      %th{:colspan => "3"}
+  %tbody
+    - @banners.each do |banner|
+      %tr
+        %td= banner.name
+        %td= banner.startDate
+        %td= banner.endDate
+        %td= link_to 'Go to gacha', "/banner/#{banner.name}"
+%br
+

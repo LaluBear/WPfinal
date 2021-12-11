@@ -1,4 +1,4 @@
 class Banner < ApplicationRecord
    
-   has_many :inventories 
+   has_many :banner_items
 end

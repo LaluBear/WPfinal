@@ -1,0 +1,20 @@
+%p#notice= notice
+%h1 Banners
+%table
+  %thead
+    %tr
+      %th Bannername
+      %th Bannerstartdate
+      %th Bannerenddate
+      %th{:colspan => "3"}
+  %tbody
+    - @banners.each do |banner|
+      %tr
+        %td= banner.name
+        %td= banner.startDate
+        %td= banner.endDate
+        %td= link_to 'Show', banner
+        %td= link_to 'Edit', edit_banner_path(banner)
+        %td= link_to 'Destroy', banner, method: :delete, data: { confirm: 'Are you sure?' }
+%br
+

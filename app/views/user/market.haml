@@ -1,0 +1,27 @@
+%p#notice= notice
+%h1 Market
+%table
+  %thead
+    %tr
+      %th Item img
+      %th Itemname
+      %th Rarity
+      %th Amount
+      %th{:colspan => "3"}
+  %tbody
+    - @items.each_with_index do |item,index|
+      %tr
+        %td 
+          %img{:src => item.item_img_url, :width => "200", :height => "auto"}
+        %td= item.name
+        %td= item.rarity
+        %td= @number_items[index] 
+        %td
+          = form_with(model: item, url: "/buy/#{item.name}?seller_id=#{@seller[index].id}") do |form|
+            
+            .field
+              = form.number_field :amount
+            .actions
+              = form.submit "Buy"
+        %td= button_to 'How to obtain', "/how_to_obtain/#{item.name}"
+

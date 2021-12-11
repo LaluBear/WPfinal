@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_07_160439) do
+ActiveRecord::Schema.define(version: 2021_12_11_100828) do
 
   create_table "banner_items", force: :cascade do |t|
     t.integer "banner_id", null: false
     t.integer "item_id", null: false
     t.integer "rate"
-    t.integer "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["banner_id"], name: "index_banner_items_on_banner_id"
@@ -45,16 +44,18 @@ ActiveRecord::Schema.define(version: 2021_12_07_160439) do
     t.integer "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "price"
     t.index ["item_id"], name: "index_inventories_on_item_id"
     t.index ["user_id"], name: "index_inventories_on_user_id"
   end
 
   create_table "items", force: :cascade do |t|
-    t.string "itemname"
+    t.string "name"
     t.string "rarity"
     t.string "item_img_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "onsale"
   end
 
   create_table "likes", force: :cascade do |t|

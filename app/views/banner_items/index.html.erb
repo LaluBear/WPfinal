@@ -8,7 +8,6 @@
       <th>Banner</th>
       <th>Item</th>
       <th>Rate</th>
-      <th>Amount</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,7 +18,6 @@
         <td><%= banner_item.banner_id %></td>
         <td><%= banner_item.item_id %></td>
         <td><%= banner_item.rate %></td>
-        <td><%= banner_item.amount %></td>
         <td><%= link_to 'Show', banner_item %></td>
         <td><%= link_to 'Edit', edit_banner_item_path(banner_item) %></td>
         <td><%= link_to 'Destroy', banner_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>

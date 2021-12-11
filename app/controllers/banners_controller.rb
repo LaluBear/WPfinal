@@ -76,7 +76,24 @@ class BannersController < ApplicationController
     #random something out ten times
     #put it in items for show
     #Add them to user inventory
-    redirect_to "/banner/#{banner.bannerName}"
+    redirect_to "/banner/#{@banner.name}"
+    @no = "randomsome"
+  end
+  
+  def banner_gacha
+    @banner = Banner.find_by(name: params[:name])
+    if(!@banner)
+      redirect_to "/error"
+    end
+  end
+  
+  def how_to_obtain
+    @item = Item.find_by(name: params[:name],onsale: "no")
+    @banner_item = BannerItem.where(item_id: @item.id)
+    @banners = Array.new
+    @banner_item.each do |banner|
+      @banners.push(banner.banner)
+    end
   end
   
   private
