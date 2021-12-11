@@ -106,7 +106,7 @@ class UserController < ApplicationController
       if(@onsale_item)
         @onsale_item.each do |inventory|
           @items.push(item)
-          @number_items.push(inventory.amount)
+          @number_items.push([inventory.amount,inventory.price])
           @seller.push(inventory.user)
         end
       end
@@ -134,7 +134,7 @@ class UserController < ApplicationController
         @sell_inventory.amount += params[:item][:amount].to_i
         @sell_inventory.save
       else
-        @inventory = Inventory.new(item_id: @sell_item.id, user_id: session[:user_id], amount: params[:item][:amount].to_i)
+        @inventory = Inventory.new(item_id: @sell_item.id, user_id: session[:user_id], amount: params[:item][:amount].to_i,price: params[:item][:price])
         @inventory.save
       end
     end
@@ -157,11 +157,24 @@ class UserController < ApplicationController
       redirect_to "/market", notice: "please type in some reasonable amount number"
       return
     end
+    
     @sell_item.amount -= params[:item][:amount].to_i
-    if(params[:item][:amount].to_i > @sell_item.amount)
-      redirect_to "/market", notice: "please type in some reasonable amount number"
+    #Tranfer Credit
+    @buyer = User.find(session[:user_id])
+    @seller = User.find(params[:seller_id]) 
+    @total_pay = params[:item][:amount].to_i * @sell_item.price
+    @buyer.credit -= @total_pay
+    @seller.credit += @total_pay
+    if(@buyer.credit < 0)
+      redirect_to "/market", notice: "You don't have enough credit"
       return
     end
+    
+    #Log transanction
+    @transanction = Transanction.new(buyer_id: session[:user_id], seller_id: params[:seller_id], item_id: @item.id, price: (@sell_item.price * params[:item][:amount].to_i),amount: params[:item][:amount].to_i)
+    
+    
+    
     #find item in inventory
     @have_item = Item.find_by(name: params[:name],onsale: "no")
     if(@have_item)
@@ -179,6 +192,9 @@ class UserController < ApplicationController
     else
       @sell_item.save
     end
+    @buyer.save
+    @seller.save
+    @transanction.save
     redirect_to "/market", notice: "Thank You for purchasing, Wish You Luck."
   end
   

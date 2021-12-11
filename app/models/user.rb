@@ -54,7 +54,7 @@ class User < ApplicationRecord
       if(item.item.onsale == "yes")
         @have_item = Inventory.find_by(item_id: item.item_id,user_id: self.id); 
         if(@have_item)
-          @array.push(@have_item.amount)  
+          @array.push([@have_item.amount,@have_item.price])  
         end
       end
     end

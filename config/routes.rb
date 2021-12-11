@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   
   patch '/sell/:name', to: 'user#sell'
   patch '/buy/:name', to: 'user#buy'
+  patch '/cancel/:name', to: 'user#cancel'
   
   post '/login_attempt', to: 'user#login_attempt'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
