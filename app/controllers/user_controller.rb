@@ -26,8 +26,8 @@ class UserController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
+        format.html { redirect_to "/main", notice: "User was successfully created." }
+        format.json { render "/main", status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -54,6 +54,22 @@ class UserController < ApplicationController
     respond_to do |format|
       format.html { redirect_to users_url, notice: "User was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+  
+  
+  def new_user
+    @user = User.new
+  end
+  
+  def create_user
+    @user = User.new(user_params)
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to "/main", notice: "User was successfully created." }
+      else
+        format.html { redirect_to "/new_user",method: "post", status: :unprocessable_entity }
+      end
     end
   end
   

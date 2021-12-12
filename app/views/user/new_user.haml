@@ -1,5 +1,6 @@
 %p#notice= notice
-= form_with(model: @user, url: "/login_attempt") do |form|
+New User
+= form_with(model: @user, url:"/create_user") do |form|
   - if @user.errors.any?
     #error_explanation
       %h2
@@ -9,12 +10,17 @@
         - @user.errors.each do |error|
           %li= error.full_message
   .field
+    = form.label :name
+    = form.text_field :name
+  .field
     = form.label :email
     = form.text_field :email
   .field
     = form.label :password
     = form.text_field :password
+  .field
+    = form.hidden_field :credit, :value => 0
   .actions
-    = form.submit "login"
-  
-= button_to 'Create User', "/user/new"
+    = form.submit
+
+

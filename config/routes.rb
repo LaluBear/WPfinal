@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   
   get '/redeem', to: 'codes#redeem'
   
+  post '/user/new', to: 'user#new'
+  post '/new_user', to: 'user#new_user'
+  post '/create_user', to: 'user#create_user'
   post '/cancel/:name', to: 'user#cancel'
   
   post '/banner/:name/pull_one', to: 'banners#pull_one'
