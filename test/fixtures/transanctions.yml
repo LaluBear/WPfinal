@@ -1,15 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
-  user: one
+  buyer: one
+  seller: two
   item: one
   price: 1
   amount: 1
 
 two:
-  user: two
-  user: two
+  buyer: two
+  seller: one
   item: two
   price: 1
   amount: 1

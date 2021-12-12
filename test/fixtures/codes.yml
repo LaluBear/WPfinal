@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  type: 
-  creditAmount: 1
-  status: MyString
+  creditAmount: 12000
+  status: available
+  code: 1
 
 two:
-  type: 
-  creditAmount: 1
-  status: MyString
+  creditAmount: 20000
+  status: redeemed
+  code: 2

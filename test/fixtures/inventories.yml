@@ -3,9 +3,11 @@
 one:
   user: one
   item: one
-  amount: 1
-
+  amount: 10
+  price: nil
+  
 two:
   user: two
-  item: two
-  amount: 1
+  item: three
+  amount: 10
+  price: 120

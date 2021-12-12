@@ -1,11 +1,25 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  itemname: MyString
-  rarity: MyString
-  item_img_url: MyString
+  name: Padoru01
+  rarity: normal
+  item_img_url: https://live.staticflickr.com/65535/24310990407_76d67696ea_b.jpg 	
+  onsale: "no"
 
 two:
-  itemname: MyString
-  rarity: MyString
-  item_img_url: MyString
+  name: Padoru03
+  rarity: rare
+  item_img_url: https://live.staticflickr.com/4903/44501383270_f7c6c831f3_b.jpg
+  onsale: "no"
+
+three:
+  name: Padoru01
+  rarity: normal
+  item_img_url: https://live.staticflickr.com/65535/24310990407_76d67696ea_b.jpg 	
+  onsale: "yes"
+
+four:
+  name: Padoru03
+  rarity: rare
+  item_img_url: https://live.staticflickr.com/4903/44501383270_f7c6c831f3_b.jpg
+  onsale: "yes"

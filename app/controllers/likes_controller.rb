@@ -58,6 +58,17 @@ class LikesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def logged_in
+      if(session[:user_id])
+        a = 1
+      else
+        session[:user_id] = nil
+        redirect_to "/main", notice: "Please login"
+        return
+      end
+    end
+    
+    
     def set_like
       @like = Like.find(params[:id])
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_11_100828) do
+ActiveRecord::Schema.define(version: 2021_12_12_183059) do
 
   create_table "banner_items", force: :cascade do |t|
     t.integer "banner_id", null: false
@@ -28,14 +28,15 @@ ActiveRecord::Schema.define(version: 2021_12_11_100828) do
     t.date "endDate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "price"
   end
 
   create_table "codes", force: :cascade do |t|
-    t.string "type"
     t.integer "creditAmount"
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "code"
   end
 
   create_table "inventories", force: :cascade do |t|

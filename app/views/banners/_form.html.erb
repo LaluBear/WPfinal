@@ -12,20 +12,25 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :bannerName %>
-    <%= form.text_field :bannerName %>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :bannerStartDate %>
-    <%= form.date_select :bannerStartDate %>
+    <%= form.label :startDate %>
+    <%= form.date_select :startDate %>
   </div>
 
   <div class="field">
-    <%= form.label :bannerEndDate %>
-    <%= form.date_select :bannerEndDate %>
+    <%= form.label :endDate %>
+    <%= form.date_select :endDate %>
   </div>
-
+  
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.number_field :price %>
+  </div>
+  
   <div class="actions">
     <%= form.submit %>
   </div>

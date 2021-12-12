@@ -23,6 +23,7 @@
           = form_with(model: item, url: "/buy/#{item.name}?seller_id=#{@seller[index].id}") do |form|
             
             .field
+              = form.label :amount
               = form.number_field :amount
             .actions
               = form.submit "Buy"

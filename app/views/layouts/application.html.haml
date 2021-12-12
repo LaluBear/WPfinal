@@ -1,0 +1,24 @@
+
+%html
+  %head
+    %title WPfinal
+    %meta name="viewport" content="width=device-width,initial-scale=1"
+    =csrf_meta_tags
+    =csp_meta_tag
+
+    =stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    =javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    =stylesheet_link_tag 'application', media: 'all'
+    =javascript_pack_tag 'application'
+    %script{src:"https://code.jquery.com/jquery-3.6.0.min.js"}
+    
+    %link{href: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css", rel: "stylesheet", integrity:"sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF", crossorigin: "anonymous"}
+    %script{src: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js", integrity: "sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ", crossorigin: "anonymous"}
+    %link{:href => "https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css", :rel => "stylesheet", :type => "text/css"}
+    %script{:charset => "utf8", :src => "https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js", :type => "text/javascript"}
+
+    
+    
+    =render 'layouts/navigation'
+  %body
+    = yield

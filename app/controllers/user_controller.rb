@@ -1,6 +1,7 @@
 class UserController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-
+  
+  before_action :logged_in, only: %i[ gacha error like unlike market cancel sell buy ]
   # GET /users or /users.json
   def index
     @users = User.all
@@ -70,6 +71,11 @@ class UserController < ApplicationController
     redirect_to "/main"
   end
   
+  def logout
+    session[:user_id] = nil
+    redirect_to "/out"
+  end
+  
   def login_attempt
     
     @user = User.find_by(email: params[:user][:email])
@@ -96,6 +102,19 @@ class UserController < ApplicationController
   def error
   end
   
+  def like
+    @like = Like.new(user_id: session[:user_id], banner_id: params[:id])
+    @like.save
+    redirect_back(fallback_location:"/")
+  end
+  
+  def unlike  
+    
+    @like = Like.find_by(user_id: session[:user_id], banner_id: params[:id])
+    @like.destroy
+    redirect_back(fallback_location:"/")
+  end
+  
   def market
     @rawitems = Item.where(onsale:"yes")
     @items = Array.new
@@ -105,12 +124,32 @@ class UserController < ApplicationController
       @onsale_item = Inventory.where(item_id: item.id)
       if(@onsale_item)
         @onsale_item.each do |inventory|
-          @items.push(item)
-          @number_items.push([inventory.amount,inventory.price])
-          @seller.push(inventory.user)
+          if(inventory.user_id != session[:user_id])
+            @items.push(item)
+            @number_items.push([inventory.amount,inventory.price])
+            @seller.push(inventory.user)
+          end
         end
       end
     end
+  end
+  
+  def cancel
+    #find sell item from market
+    @item = Item.find_by(name: params[:name],onsale: "yes")
+    @sell_item = Inventory.find_by(item_id: @item.id,user_id: session[:user_id])
+    @item = Item.find_by(name: params[:name],onsale: "no")
+    @have_item = Inventory.find_by(item_id: @item.id,user_id: session[:user_id])
+    if(@have_item)
+      @have_item.amount += @sell_item.amount
+      @have_item.save 
+    else
+      @inventory = Inventory.new(item_id: @item.id,user_id: session[:user_id],amount: @sell_item.amount)
+      @inventory.save
+    end
+    @sell_item.destroy
+    
+    redirect_to "/inventory"
   end
   
   #sell stuff from inventory
@@ -121,7 +160,7 @@ class UserController < ApplicationController
     
     #check if sell more than amount you have
     if(params[:item][:amount].to_i > @have_item.amount)
-      redirect_to "/inventory"
+      redirect_to "/inventory", notice: "please type in some reasonable amount number"
       return
     end
     @have_item.amount -= params[:item][:amount].to_i
@@ -175,6 +214,7 @@ class UserController < ApplicationController
     
     
     
+    @item = Item.find_by(name: params[:name],onsale: "no")
     #find item in inventory
     @have_item = Item.find_by(name: params[:name],onsale: "no")
     if(@have_item)
@@ -183,7 +223,7 @@ class UserController < ApplicationController
         @have_inventory.amount += params[:item][:amount].to_i
         @have_inventory.save
       else
-        @inventory = Inventory.new(item_id: @sell_item.id, user_id: session[:user_id], amount: params[:item][:amount].to_i)
+        @inventory = Inventory.new(item_id: @have_item.id, user_id: session[:user_id], amount: params[:item][:amount].to_i)
         @inventory.save
       end
     end
@@ -198,8 +238,22 @@ class UserController < ApplicationController
     redirect_to "/market", notice: "Thank You for purchasing, Wish You Luck."
   end
   
+  
+  
+  
   private
     # Use callbacks to share common setup or constraints between actions.
+    def logged_in
+      if(session[:user_id])
+        a = 1
+      else
+        session[:user_id] = nil
+        redirect_to "/main", notice: "Please login"
+        return
+      end
+    end
+    
+    
     def set_user
       @user = User.find(params[:id])
     end

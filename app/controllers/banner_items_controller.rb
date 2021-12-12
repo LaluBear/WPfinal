@@ -1,6 +1,7 @@
 class BannerItemsController < ApplicationController
   before_action :set_banner_item, only: %i[ show edit update destroy ]
-
+  before_action :logged_in, only: %i[]
+  
   # GET /banner_items or /banner_items.json
   def index
     @banner_items = BannerItem.all
@@ -57,6 +58,17 @@ class BannerItemsController < ApplicationController
   end
 
   private
+    
+    def logged_in
+      if(session[:user_id])
+        a = 1
+      else
+        session[:user_id] = nil
+        redirect_to "/main", notice: "Please login"
+        return
+      end
+    end
+    
     # Use callbacks to share common setup or constraints between actions.
     def set_banner_item
       @banner_item = BannerItem.find(params[:id])

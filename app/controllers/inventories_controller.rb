@@ -1,6 +1,7 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: %i[ show edit update destroy ]
-
+  
+  before_action :logged_in, only: %i[ inventory ]
   # GET /inventories or /inventories.json
   def index
     @inventories = Inventory.all
@@ -66,6 +67,16 @@ class InventoriesController < ApplicationController
   
   private
     # Use callbacks to share common setup or constraints between actions.
+    def logged_in
+      if(session[:user_id])
+        a = 1
+      else
+        session[:user_id] = nil
+        redirect_to "/main", notice: "Please login"
+        return
+      end
+    end
+    
     def set_inventory
       @inventory = Inventory.find(params[:id])
     end

@@ -1,3 +1,4 @@
+
 %p#notice= notice
 %div
   %p
@@ -11,11 +12,55 @@
     %strong enddate:
     = @banner.endDate
 %div
-  = button_to "pull 1", "/banner/#{@banner.name}/pull_one"
-  = button_to "pull 10", "/banner/#{@banner.name}/pull_ten"
-%div
-= link_to 'Edit', edit_banner_path(@banner)
-|
-= link_to 'Back', banners_path
--if @no
-  = @no
+  = button_to "pull 1 for #{@banner.price}", "/banner/#{@banner.name}/pull_one"
+  = button_to "pull 10 for #{@banner.price*10}", "/banner/#{@banner.name}/pull_ten" 
+Rate
+%table
+  %thead
+    %tr
+      %th Item img
+      %th Itemname
+      %th Rarity
+      %th rate
+      %th{:colspan => "3"}
+  %tbody
+    - @rate.each do |item|
+      %tr
+        %td 
+          %img{:src => item[1].item_img_url, :width => "200", :height => "auto"}
+        %td= item[1].name
+        %td= item[1].rarity
+        %td= item[0].to_f/@all_rate 
+
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :id => "exampleModal", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title Like People
+        %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", :type => "button"}
+      .modal-body
+      .modal-footer
+        %button.btn.btn-secondary{"data-bs-dismiss" => "modal", :type => "button"} Close
+        
+:javascript
+  console.log("hello")
+  $(".button_to").click(function(){
+    var Modal = $('.modal');
+    var Modaltext = $('.modal-body');
+    Modaltext.toggle;
+    Modaltext.html(@got_items.join('<br>'));
+  })
+  
+:javascript
+  console.log("hello")
+  $(".show").click(function(){
+    var post = $(this).prev();
+    var numlike = post.html();
+    var Modal = $('.modal');
+    var Modaltext = $('.modal-body');
+    console.log(numlike);
+    console.log($(this).attr("attr"));
+    Modaltext.html(numlike);
+    Modaltext.html(numlike + "<br>" +$(this).attr("attr"));
+    
+  })

@@ -5,9 +5,10 @@
 <table>
   <thead>
     <tr>
-      <th>Bannername</th>
-      <th>Bannerstartdate</th>
-      <th>Bannerenddate</th>
+      <th>Name</th>
+      <th>Startdate</th>
+      <th>Enddate</th>
+      <th>Price</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,9 +16,10 @@
   <tbody>
     <% @banners.each do |banner| %>
       <tr>
-        <td><%= banner.bannerName %></td>
-        <td><%= banner.bannerStartDate %></td>
-        <td><%= banner.bannerEndDate %></td>
+        <td><%= banner.name %></td>
+        <td><%= banner.startDate %></td>
+        <td><%= banner.endDate %></td>
+        <td><%= banner.price %></td>
         <td><%= link_to 'Show', banner %></td>
         <td><%= link_to 'Edit', edit_banner_path(banner) %></td>
         <td><%= link_to 'Destroy', banner, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -1,20 +1,18 @@
-= form_with(model: @code, url: "/login_attempt") do |form|
-  - if @user.errors.any?
+%p#notice= notice
+= form_with(model: @code, url: "/redeem/code") do |form|
+  - if @code.errors.any?
     #error_explanation
       %h2
-        = pluralize(@user.errors.count, "error")
+        = pluralize(@code.errors.count, "error")
         prohibited this user from being saved:
       %ul
-        - @user.errors.each do |error|
+        - @code.errors.each do |error|
           %li= error.full_message
   .field
-    = form.label :email
-    = form.text_field :email
-  .field
-    = form.label :password
-    = form.text_field :password
+    = form.label :code
+    = form.text_field :code
   .actions
-    = form.submit "login"
+    = form.submit "redeem"
 
 %button  
   = link_to 'Create User', "/users/new"

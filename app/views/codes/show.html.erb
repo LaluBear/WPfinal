@@ -1,11 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Type:</strong>
-  <%= @code.type %>
-</p>
-
-<p>
   <strong>Creditamount:</strong>
   <%= @code.creditAmount %>
 </p>
@@ -15,5 +10,9 @@
   <%= @code.status %>
 </p>
 
+<p>
+  <strong>Code:</strong>
+  <%= @code.code %>
+</p>
 <%= link_to 'Edit', edit_code_path(@code) %> |
 <%= link_to 'Back', codes_path %>

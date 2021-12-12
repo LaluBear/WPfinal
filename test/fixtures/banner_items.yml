@@ -4,10 +4,8 @@ one:
   banner: one
   item: one
   rate: 1
-  amount: 1
 
 two:
-  banner: two
+  banner: one
   item: two
   rate: 1
-  amount: 1

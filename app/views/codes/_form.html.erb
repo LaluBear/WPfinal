@@ -12,11 +12,6 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :type %>
-    <%= form.text_field :type %>
-  </div>
-
-  <div class="field">
     <%= form.label :creditAmount %>
     <%= form.number_field :creditAmount %>
   </div>
@@ -25,7 +20,12 @@
     <%= form.label :status %>
     <%= form.text_field :status %>
   </div>
-
+  
+  <div class="field">
+    <%= form.label :code %>
+    <%= form.text_field :code %>
+  </div>
+  
   <div class="actions">
     <%= form.submit %>
   </div>

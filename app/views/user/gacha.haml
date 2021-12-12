@@ -3,18 +3,48 @@
 %table
   %thead
     %tr
-      %th Bannername
-      %th Bannerstartdate
-      %th Bannerenddate
+      %th BannerName
+      %th Startdate
+      %th Enddate
+      %th like
+      %th
+      %th
       %th{:colspan => "3"}
   %tbody
     - @banners.each do |banner|
       %tr
-        %td= banner.name
+        %td= link_to "#{banner.name}", "banner/#{banner.name}"
         %td= banner.startDate
         %td= banner.endDate
-        %td= link_to 'Show', banner
-        %td= link_to 'Edit', edit_banner_path(banner)
-        %td= link_to 'Destroy', banner, method: :delete, data: { confirm: 'Are you sure?' }
+        %td{ class: "idz"}
+          = "#{(banner.likes).count} likes"
+        %td
+          - if(Like.find_by(user_id: session[:user_id],banner_id: banner.id))
+            = link_to "unlike ", "/unlike/#{banner.id}"
+          - else
+            = link_to "like ", "/like/#{banner.id}"
+        %td  
+          %button{:class => "btn btn-primary show","data-bs-toggle"=>"modal", "data-bs-target"=>"#exampleModal", :type => "button" , "attr" => banner.likes.map{|like| "#{like.user.name}"}.join('<br>').html_safe}
+            Show Like People
+        %br
 %br
 
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :id => "exampleModal", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title Like People
+        %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", :type => "button"}
+      .modal-body
+        %p ...aaa
+      .modal-footer
+        %button.btn.btn-secondary{"data-bs-dismiss" => "modal", :type => "button"} Close
+        
+:javascript
+  console.log("hello")
+  $(".show").click(function(){
+    var Modaltext = $('.modal-body');
+    console.log($(this).attr("attr"));
+    Modaltext.html($(this).attr("attr"));
+    
+  })

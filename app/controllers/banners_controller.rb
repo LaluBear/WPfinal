@@ -1,6 +1,8 @@
 class BannersController < ApplicationController
   before_action :set_banner, only: %i[ show edit update destroy ]
 
+  before_action :logged_in, only: %i[ banner_gacha pull_one pull_ten how_to_obtain ]
+  
   # GET /banners or /banners.json
   def index
     @banners = Banner.all
@@ -58,34 +60,107 @@ class BannersController < ApplicationController
   
   def banner_gacha
     @banner = Banner.find_by(name: params[:name])
-    if(!@banner)
+    if(@banner)
+    else
       redirect_to "/error"
+      return
+    end
+    puts @banner
+    @rate = Array.new
+    @all_rate = 0
+    @banner.banner_items.each do |item|
+      @rate.push([item.rate.to_i,item.item])
+      @all_rate += item.rate.to_i
     end
   end
   def pull_one
     @banner = Banner.find_by(name: params[:name])
+    @all_items = @banner.banner_items
+    @roll = Array.new
+    @all_items.each do |item|
+      @roll+= [item.item]*item.rate.to_i
+      puts @roll.size
+    end
+    
+    #Calculate the price
+    @user = User.find(session[:user_id])
+    if(@user.credit.to_i < @banner.price.to_i)
+      redirect_to "/banner/#{params[:name]}", notice: "You don't have enough credit"
+      return
+    else
+      @user.credit -= @banner.price
+    end
+    
     #random something out once
-    #put it in items
     #Add them to user inventory
-    #
+    @got_items = Array.new
+    for i in 1..1 do
+      @roll = @roll.shuffle
+      @item = @roll.sample
+      @got_items.push(@item)
+      @inventory = Inventory.find_by(user_id: session[:user_id], item_id: @item.id)
+      if(@inventory)
+        @inventory.amount+=1
+        @inventory.save
+      else
+        @inventory = Inventory.new(user_id: session[:user_id], item_id: @item.id,amount: 1)
+        @inventory.save
+      end
+    end
+    @user.save
+    
   end
   
   def pull_ten
-    
     @banner = Banner.find_by(name: params[:name])
-    #random something out ten times
-    #put it in items for show
+    @all_items = @banner.banner_items
+    @roll = Array.new
+    @all_items.each do |item|
+      @roll+= [item.item]*item.rate.to_i
+      puts @roll.size
+    end
+    
+    #Calculate the price
+    @user = User.find(session[:user_id])
+    if(@user.credit < @banner.price*10)
+      redirect_to "/banner/#{params[:name]}", notice: "You don't have enough credit"
+      return
+    else
+      @user.credit -= @banner.price*10
+    end
+    
+    #random something out once
     #Add them to user inventory
-    redirect_to "/banner/#{@banner.name}"
-    @no = "randomsome"
+    @got_items = Array.new
+    @each_items = Hash.new
+    for i in 1..10 do
+      @roll = @roll.shuffle
+      @item = @roll.sample
+      @got_items.push(@item)
+      if(@each_items[@item])
+        @each_items[@item] += 1
+      else
+        @each_items[@item] = 1
+      end
+      @inventory = Inventory.find_by(user_id: session[:user_id], item_id: @item.id)
+      if(@inventory)
+        @inventory.amount+=1
+        @inventory.save
+      else
+        @inventory = Inventory.new(user_id: session[:user_id], item_id: @item.id,amount: 1)
+        @inventory.save
+      end
+    end
+    
+    
+    
+    @user.save
+    
+    #generate Modal
+    @attr = @got_items.join('').html_safe
+    #redirect_to "/banner/#{params[:name]}", :flash => { :items => @got_items }
   end
   
-  def banner_gacha
-    @banner = Banner.find_by(name: params[:name])
-    if(!@banner)
-      redirect_to "/error"
-    end
-  end
   
   def how_to_obtain
     @item = Item.find_by(name: params[:name],onsale: "no")
@@ -98,12 +173,22 @@ class BannersController < ApplicationController
   
   private
     # Use callbacks to share common setup or constraints between actions.
+    def logged_in
+      if(session[:user_id])
+        a = 1
+      else
+        session[:user_id] = nil
+        redirect_to "/main", notice: "Please login"
+        return
+      end
+    end
+    
     def set_banner
       @banner = Banner.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def banner_params
-      params.require(:banner).permit(:bannerName, :bannerStartDate, :bannerEndDate)
+      params.require(:banner).permit(:name, :startDate, :endDate, :price)
     end
 end
