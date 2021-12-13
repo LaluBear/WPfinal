@@ -203,55 +203,58 @@ class UserController < ApplicationController
   
   #buy stuff in market
   def buy
-    #find sell item from market
-    @item = Item.find_by(name: params[:name],onsale: "yes")
-    @sell_item = Inventory.find_by(item_id: @item.id,user_id: params[:seller_id])
-    
-    #check if buy more than amount you have
-    if(params[:item][:amount].to_i > @sell_item.amount)
-      redirect_to "/market", notice: "please type in some reasonable amount number"
-      return
-    end
-    
-    @sell_item.amount -= params[:item][:amount].to_i
-    #Tranfer Credit
-    @buyer = User.find(session[:user_id])
-    @seller = User.find(params[:seller_id]) 
-    @total_pay = params[:item][:amount].to_i * @sell_item.price
-    @buyer.credit -= @total_pay
-    @seller.credit += @total_pay
-    if(@buyer.credit < 0)
-      redirect_to "/market", notice: "You don't have enough credit"
-      return
-    end
-    
-    #Log transanction
-    @transanction = Transanction.new(buyer_id: session[:user_id], seller_id: params[:seller_id], item_id: @item.id, price: (@sell_item.price * params[:item][:amount].to_i),amount: params[:item][:amount].to_i)
-    
-    
-    
-    @item = Item.find_by(name: params[:name],onsale: "no")
-    #find item in inventory
-    @have_item = Item.find_by(name: params[:name],onsale: "no")
-    if(@have_item)
-      @have_inventory = Inventory.find_by(item_id: @have_item.id,user_id: session[:user_id])
-      if(@have_inventory)
-        @have_inventory.amount += params[:item][:amount].to_i
-        @have_inventory.save
-      else
-        @inventory = Inventory.new(item_id: @have_item.id, user_id: session[:user_id], amount: params[:item][:amount].to_i)
-        @inventory.save
+  
+    ActiveRecord::Base.transaction do
+      #find sell item from market
+      @item = Item.find_by(name: params[:name],onsale: "yes")
+      @sell_item = Inventory.find_by(item_id: @item.id,user_id: params[:seller_id])
+      #check if buy more than amount you have
+      if(params[:item][:amount].to_i > @sell_item.amount)
+        redirect_to "/market", notice: "please type in some reasonable amount number"
+        return
       end
+      
+      @sell_item.amount -= params[:item][:amount].to_i
+      #Tranfer Credit
+      @buyer = User.find(session[:user_id])
+      @seller = User.find(params[:seller_id]) 
+      @total_pay = params[:item][:amount].to_i * @sell_item.price
+      @buyer.credit -= @total_pay
+      @seller.credit += @total_pay
+      if(@buyer.credit < 0)
+        redirect_to "/market", notice: "You don't have enough credit"
+        return
+      end
+    
+      #Log transanction
+      @transanction = Transanction.new(buyer_id: session[:user_id], seller_id: params[:seller_id], item_id: @item.id, price: (@sell_item.price * params[:item][:amount].to_i),amount: params[:item][:amount].to_i)
+    
+      @item = Item.find_by(name: params[:name],onsale: "no")
+      #find item in inventory
+      @have_item = Item.find_by(name: params[:name],onsale: "no")
+      if(@have_item)
+        @have_inventory = Inventory.find_by(item_id: @have_item.id,user_id: session[:user_id])
+        if(@have_inventory)
+          @have_inventory.amount += params[:item][:amount].to_i
+          @have_inventory.save
+        else
+          @inventory = Inventory.new(item_id: @have_item.id, user_id: session[:user_id], amount: params[:item][:amount].to_i)
+          @inventory.save
+        end
+      end
+      if(@sell_item.amount==0)
+        @sell_item.destroy
+      else
+        @sell_item.save
+      end
+      @buyer.save
+      @seller.save
+      @transanction.save
     end
-    if(@sell_item.amount==0)
-      @sell_item.destroy
-    else
-      @sell_item.save
-    end
-    @buyer.save
-    @seller.save
-    @transanction.save
     redirect_to "/market", notice: "Thank You for purchasing, Wish You Luck."
+    
+    rescue ActiveRecord::RecordInvalid
+      redirect_to "/market", notice: "Item is not available."
   end
   
   
