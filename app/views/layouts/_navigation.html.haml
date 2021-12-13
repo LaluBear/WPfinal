@@ -13,20 +13,6 @@
           %a.nav-link{:href => "/market"} Market
         %li.nav-item
           %a.nav-link{:href => "/redeem"} Redeem
-        %li.nav-item.dropdown
-          %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
-            Dropdown
-          %ul.dropdown-menu{"aria-labelledby" => "navbarDropdown"}
-            %li
-              %a.dropdown-item{:href => "#"} Action
-            %li
-              %a.dropdown-item{:href => "#"} Another action
-            %li
-              %hr.dropdown-divider/
-            %li
-              %a.dropdown-item{:href => "#"} Something else here
-        %li.nav-item
-          %a.nav-link.disabled Disabled
         %li.nav-item
           %a.nav-link{:href => "/logout"} Logout
         -if(User.find_by(id: session[:user_id]))

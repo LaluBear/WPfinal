@@ -1,18 +1,9 @@
 %p#notice= notice
-= form_with(model: @code, url: "/redeem/code") do |form|
-  - if @code.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@code.errors.count, "error")
-        prohibited this user from being saved:
-      %ul
-        - @code.errors.each do |error|
-          %li= error.full_message
-  .field
-    = form.label :code
-    = form.text_field :code
-  .actions
-    = form.submit "redeem"
+= form_with(model: @code, url: "/redeem/code",label_errors: true, inline_errors: true) do |form|
 
-%button  
-  = link_to 'Create User', "/users/new"
+  .field
+    = form.label :code, class: "form-label form-control-label"
+    = form.text_field :code, class: "is-invalid"
+  .actions
+    = form.submit "redeem", class: "btn btn-dark"
+

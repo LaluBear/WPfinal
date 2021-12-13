@@ -26,8 +26,8 @@
               = form.label :amount
               = form.number_field :amount
             .actions
-              = form.submit "Sell"
-        %td= button_to 'How to obtain', "/how_to_obtain/#{item.name}"
+              = form.submit "Sell", class: "btn btn-dark"
+        %td= button_to 'How to obtain', "/how_to_obtain/#{item.name}", class: "btn btn-dark"
 
 %h1 onsale Inventories
 %table
@@ -48,6 +48,6 @@
         %td= item.rarity
         %td= @number_sell_items[index][0] 
         %td= @number_sell_items[index][1] 
-        %td= button_to 'Cancel', "/cancel/#{item.name}"
+        %td= button_to 'Cancel', "/cancel/#{item.name}", class: "btn btn-dark"
 
 

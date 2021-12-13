@@ -26,6 +26,6 @@
               = form.label :amount
               = form.number_field :amount
             .actions
-              = form.submit "Buy"
-        %td= button_to 'How to obtain', "/how_to_obtain/#{item.name}"
+              = form.submit "Buy", class: "btn btn-dark"
+        %td= button_to 'How to obtain', "/how_to_obtain/#{item.name}", class: "btn btn-dark"
 
