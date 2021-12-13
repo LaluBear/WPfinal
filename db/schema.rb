@@ -12,9 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2021_12_12_183059) do
 
-  create_table "banner_items", force: :cascade do |t|
-    t.integer "banner_id", null: false
-    t.integer "item_id", null: false
+  create_table "banner_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "banner_id", null: false
+    t.bigint "item_id", null: false
     t.integer "rate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2021_12_12_183059) do
     t.index ["item_id"], name: "index_banner_items_on_item_id"
   end
 
-  create_table "banners", force: :cascade do |t|
+  create_table "banners", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.date "startDate"
     t.date "endDate"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2021_12_12_183059) do
     t.integer "price"
   end
 
-  create_table "codes", force: :cascade do |t|
+  create_table "codes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "creditAmount"
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 2021_12_12_183059) do
     t.string "code"
   end
 
-  create_table "inventories", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "item_id", null: false
+  create_table "inventories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "item_id", null: false
     t.integer "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2021_12_12_183059) do
     t.index ["user_id"], name: "index_inventories_on_user_id"
   end
 
-  create_table "items", force: :cascade do |t|
+  create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "rarity"
     t.string "item_img_url"
@@ -59,19 +59,19 @@ ActiveRecord::Schema.define(version: 2021_12_12_183059) do
     t.string "onsale"
   end
 
-  create_table "likes", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "banner_id", null: false
+  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "banner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["banner_id"], name: "index_likes_on_banner_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
-  create_table "transanctions", force: :cascade do |t|
-    t.integer "buyer_id", null: false
-    t.integer "seller_id", null: false
-    t.integer "item_id", null: false
+  create_table "transanctions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "buyer_id", null: false
+    t.bigint "seller_id", null: false
+    t.bigint "item_id", null: false
     t.integer "price"
     t.integer "amount"
     t.datetime "created_at", precision: 6, null: false
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 2021_12_12_183059) do
     t.index ["seller_id"], name: "index_transanctions_on_seller_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "password_digest"
